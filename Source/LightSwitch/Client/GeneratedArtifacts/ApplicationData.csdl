@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" Namespace="LightSwitchApplication" Alias="Self" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+  <EntityType Name="Bug">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Edm.Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RowVersion" Type="Edm.Binary" Nullable="false" ConcurrencyMode="Fixed" annotation:StoreGeneratedPattern="Computed" />
+    <Property Name="Summary" Type="Edm.String" Nullable="false" MaxLength="255" />
+    <Property Name="Detail" Type="Edm.String" Nullable="false" MaxLength="2000" />
+    <Property Name="Page" Type="Edm.String" Nullable="false" MaxLength="255" />
+    <Property Name="StepsToReproduce" Type="Edm.String" MaxLength="2000" />
+    <Property Name="DateLogged" Type="Edm.DateTime" Nullable="false" />
+    <Property Name="Status" Type="Edm.String" Nullable="false" MaxLength="255" />
+    <Property Name="Image" Type="Edm.Binary" MaxLength="Max" />
+    <Property Name="Bug_Tester" Type="Edm.Int32" Nullable="false" />
+    <NavigationProperty Name="Tester" Relationship="LightSwitchApplication.Bug_Tester" ToRole="Tester" FromRole="Bug" />
+  </EntityType>
+  <EntityType Name="Tester">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Edm.Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RowVersion" Type="Edm.Binary" Nullable="false" ConcurrencyMode="Fixed" annotation:StoreGeneratedPattern="Computed" />
+    <Property Name="UserName" Type="Edm.String" Nullable="false" MaxLength="255" />
+    <NavigationProperty Name="Bugs" Relationship="LightSwitchApplication.Bug_Tester" ToRole="Bug" FromRole="Tester" />
+  </EntityType>
+  <Association Name="Bug_Tester">
+    <End Role="Tester" Type="LightSwitchApplication.Tester" Multiplicity="1" />
+    <End Role="Bug" Type="LightSwitchApplication.Bug" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tester">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Bug">
+        <PropertyRef Name="Bug_Tester" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ApplicationDataObjectContext" m:IsDefaultEntityContainer="true">
+    <EntitySet Name="Bugs" EntityType="LightSwitchApplication.Bug" />
+    <EntitySet Name="Testers" EntityType="LightSwitchApplication.Tester" />
+    <AssociationSet Name="Bug_Tester" Association="LightSwitchApplication.Bug_Tester">
+      <End Role="Tester" EntitySet="Testers" />
+      <End Role="Bug" EntitySet="Bugs" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

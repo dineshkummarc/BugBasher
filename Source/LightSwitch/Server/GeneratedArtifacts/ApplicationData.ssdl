@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="ApplicationDataStore" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2005" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+  <EntityContainer Name="ApplicationDataStore">
+    <EntitySet Name="Bugs" EntityType="ApplicationDataStore.Bug" store:Type="Tables" Schema="dbo" Table="Bugs" />
+    <EntitySet Name="Testers" EntityType="ApplicationDataStore.Tester" store:Type="Tables" Schema="dbo" Table="Testers" />
+    <AssociationSet Name="Bug_Tester" Association="ApplicationDataStore.Bug_Tester">
+      <End Role="Tester" EntitySet="Testers" />
+      <End Role="Bug" EntitySet="Bugs" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Bug">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="RowVersion" Type="rowversion" Nullable="false" StoreGeneratedPattern="Computed" />
+    <Property Name="Summary" Type="nvarchar" Nullable="false" MaxLength="255" />
+    <Property Name="Detail" Type="nvarchar" Nullable="false" MaxLength="2000" />
+    <Property Name="Page" Type="nvarchar" Nullable="false" MaxLength="255" />
+    <Property Name="StepsToReproduce" Type="nvarchar" MaxLength="2000" />
+    <Property Name="DateLogged" Type="datetime" Nullable="false" />
+    <Property Name="Status" Type="nvarchar" Nullable="false" MaxLength="255" />
+    <Property Name="Image" Type="varbinary(max)" />
+    <Property Name="Bug_Tester" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Tester">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="RowVersion" Type="rowversion" Nullable="false" StoreGeneratedPattern="Computed" />
+    <Property Name="UserName" Type="nvarchar" Nullable="false" MaxLength="255" />
+  </EntityType>
+  <Association Name="Bug_Tester">
+    <End Role="Tester" Type="ApplicationDataStore.Tester" Multiplicity="1" />
+    <End Role="Bug" Type="ApplicationDataStore.Bug" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tester">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Bug">
+        <PropertyRef Name="Bug_Tester" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

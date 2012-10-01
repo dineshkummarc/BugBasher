@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<ModelDocumentManifest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Documents>
+    <Document FullPath="E:\Source\GitRepos\BugBasher\Source\LightSwitch\Client\Properties\Client.lsml" Checksum="9C9493A0ADEA0BB244EE2FF905D0233219B0B648EAFF93966712844CBDD1A403" />
+    <Document FullPath="E:\Source\GitRepos\BugBasher\Source\LightSwitch\Common\Properties\Common.lsml" Checksum="21C3E5B58B956930520BEFD946C53F7FFB4F66D85A8E763AEC93C584E95BD055" />
+  </Documents>
+</ModelDocumentManifest>
